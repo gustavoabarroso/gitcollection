@@ -4,6 +4,7 @@ import { FiChevronRight } from "react-icons/fi";
 import { api } from "../../services/api";
 import { Title, Form, Repos, Error } from "./styles";
 import logo from "../../assets/logo.svg";
+import { Link } from "react-router-dom";
 
 interface GithubRepository {
   full_name: string;
@@ -65,19 +66,20 @@ export const Dashboard: React.FC = () => {
       {inputError && <Error>{inputError}</Error>}
 
       <Repos>
-        {repos.map((repository) => (
-          <a href="/repositories" key={repository.full_name}>
-            <img
-              src={repository.owner.avatar_url}
-              alt={repository.owner.login}
-            />
-            <div>
-              <strong>{repository.full_name}</strong>
-              <p>{repository.description}</p>
-            </div>
-            <FiChevronRight size={20} />
-          </a>
-        ))}
+        {repos.map((repo) => {
+          return (
+            <React.Fragment key={repo.full_name}>
+              <Link to={`/repositories/${encodeURIComponent(repo.full_name)}`}>
+                <img src={repo.owner.avatar_url} alt={repo.owner.login} />
+                <div>
+                  <strong>{repo.full_name}</strong>
+                  <p>{repo.description}</p>
+                </div>
+                <FiChevronRight size={20} />
+              </Link>
+            </React.Fragment>
+          );
+        })}
       </Repos>
     </>
   );
