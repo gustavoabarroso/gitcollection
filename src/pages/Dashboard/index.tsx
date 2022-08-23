@@ -79,10 +79,13 @@ export const Dashboard: React.FC = () => {
       {inputError && <Error>{inputError}</Error>}
 
       <Repos>
-        {repos.map((repo) => {
+        {repos.map((repo, index) => {
           return (
             <React.Fragment key={repo.full_name}>
-              <Link to={`/repositories/${encodeURIComponent(repo.full_name)}`}>
+              <Link
+                to={`/repositories/${encodeURIComponent(repo.full_name)}`}
+                key={repo.full_name + index}
+              >
                 <img src={repo.owner.avatar_url} alt={repo.owner.login} />
                 <div>
                   <strong>{repo.full_name}</strong>
